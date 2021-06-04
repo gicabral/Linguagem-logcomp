@@ -65,14 +65,24 @@ print(b)
 ## EBNF dessa linguagem 
 
 ```diff
-DEF = "def", IDENTIFIER, "(", (" "| IDENTIFIER), ")", "{", COMMANDS, "}";
-BLOCK = (" " | COMMANDS, {COMMANDS});
-COMMANDS = " "|("if", "(", EXPRESSIONIF, ")", ":", BLOCK, {"else", ":", BLOCK}, "endif") | (IDENTIFIER, "=", EXPRESSION)|("print", 
-"(", EXPRESSION, ")") | ("while", "(", EXPRESSIONIF, ")", ":", BLOCK, "endwhile");
-FACTOR = NUMBER| ("(", EXPRESSIONIF, ")") | (("+"|"-"|"not"), FACTOR) | IDENTIFIER;
-TERM = FACTOR, {("*"|"/"|"and"), FACTOR};
-EXPRESSION = TERM, {("+"|"-"|"or"), TERM};
-EXPRESSIONIF = EXPRESSION, {("="|">"|"<"), EXPRESSION};
+PROGRAM = (BLOCK, {BLOCK});
+BLOCK = (COMMANDS, {COMMANDS});
+DEF = "def", IDENTIFIER, "(", (" "| DEFARGS), ")", "{", BLOCK, "}";
+DEFARGS = IDENTIFIER, {",", IDENTIFIER};
+DEFCALL = IDENTIFIER, "(", {ARGUMENTS}, ")";
+ARGUMENTS = OREXPRESSION | {ARGUMENTS, ",", OREXPRESSION};
+COMMANDS = DEF |("if", "(", OREXPRESSION, ")", ":", BLOCK, {"else", ":", BLOCK}, "endif") | (IDENTIFIER, "=", OREXPRESSION)|("print", 
+"(", OREXPRESSION, ")") | ("while", "(", OREXPRESSION, ")", ":", BLOCK, "endwhile") | RETURN | OREXPRESSION;
+RETURN = "return", {OREXPRESSION};
+POWEXPRESSION = (NUMBER | IDENTIFIER | DEFCALL) | ("(", OREXPRESSION, ")");
+POWER = POWEXPRESSION, "**", FACTOR;
+FACTOR = (FACTOR | POWER), {("+"|"-"), (FACTOR | POWER)};
+TERM = FACTOR, {("*"|"/"), FACTOR};
+EXPRESSION = TERM, {("+"|"-"), TERM};
+REALEXPRESSION = EXPRESSION, {("="|">"|"<"), EXPRESSION};
+NOTEXPRESSION = ("!", (NOTEXPRESSION | REALEXPRESSION));
+ANDEXPRESSION = NOTEXPRESSION, {"&&", NOTEXPRESSION};
+OREXPRESSION = ANDEXPRESSION, {"||", ANDEXPRESSION};
 IDENTIFIER = LETTER, {LETTER | DIGIT | "_"};
 NUMBER = DIGIT, {DIGIT};
 LETTER = (a | ... | z | A | ... | Z);
