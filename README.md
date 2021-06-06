@@ -89,10 +89,6 @@ LETTER = (a | ... | z | A | ... | Z);
 DIGIT = ( 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 );
 ```
 
-## Diagrama Sintático dessa linguagem
-
-![](/imagens/diagrama.png)
-
 ## Ferramentas e Implementação
 Para implementar essa linguagem foi utilizada uma biblioteca chamada RPLY, que é uma ferramenta que consegue gerar analisadores em python. 
 
