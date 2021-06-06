@@ -4,7 +4,7 @@ from symboltable import SymbolTable
 import sys
 
 if(len(sys.argv) < 2):
-    raise Exception("Você tem que fornecer um arquivo")
+    raise Exception("Nenhum arquivo foi fornecido")
 
 with open(sys.argv[1]) as f:
     file = f.read()    

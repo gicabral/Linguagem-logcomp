@@ -1,6 +1,5 @@
 from symboltable import IdentSymbol, FuncSymbol, SymbolTable
 
-#Special/specific nodes
 
 class Number():
     def __init__(self, value):
@@ -9,7 +8,6 @@ class Number():
         return int(self.value)
 
 class ArgList():
-    #Recebe NAMES
     def __init__(self, firstborn):
         self.childs = [firstborn]
     def addChild(self, child):
@@ -43,7 +41,7 @@ class Block():
             if(type(result) == ReturnNode):
                 return result
 
-class Ident():
+class Identifier():
     def __init__(self, name):
         self.name = name
     def eval(self, st):
@@ -65,18 +63,17 @@ class FuncCall():
         self.name = name
         self.argList = argList
     def eval(self, st):
-        func = st.getSymbol(self.name) #get function definition
-        if(len(self.argList) != len(func.argList)): #check if has same arglen
+        func = st.getSymbol(self.name) 
+        if(len(self.argList) != len(func.argList)): 
             raise Exception(f"{self.name} receives {len(self.argList)} arguments but {func.argList} were given")
         
-        funcSt = SymbolTable(self.name, st) #create local scope
+        funcSt = SymbolTable(self.name, st) 
 
-        for i in range(len(func.argList)):  #copy args for local scope
-            #                   Arg name       , arg value
+        for i in range(len(func.argList)):  
             symb = IdentSymbol(func.argList[i],self.argList[i].eval(st))
             funcSt.setSymbol(symb)
         
-        result = func.block.eval(funcSt) #run funcblock with local scope
+        result = func.block.eval(funcSt) 
         
         if(not result is None): 
             return result.eval(funcSt)
@@ -109,7 +106,6 @@ class IfNode():
             return result
         
 
-#Base nodes
 class UnOp():
     def __init__(self, child):
         self.child = child
@@ -119,7 +115,6 @@ class BinOp():
         self.left = left
         self.right = right
 
-#Binops
 
 class Sum(BinOp):
     def eval(self,st):
@@ -165,10 +160,6 @@ class Assign(BinOp):
     def eval(self, st):
         symbol = IdentSymbol(self.left, self.right.eval(st))
         st.setSymbol(symbol)
-
-
-
-#UNOP 
 
 class Print(UnOp):
     def eval(self, st):
