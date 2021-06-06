@@ -8,6 +8,7 @@ tokens = {
     'IF': r'if',
     'ENDWHILE':r'endwhile',
     'ENDIF': r'endif',
+    'ENDELSE': r'endelse',
     'ELSE': r'else',
     'RETURN': r'return',
     'NUMBER': r'\d+',

@@ -94,7 +94,7 @@ class Parser():
             blocktrue = tokens[5]
             return IfNode(condition, blocktrue)
         
-        @self.pg.production('if_command : IF LPAR orexpression RPAR DOISP block ENDIF ELSE DOISP block ENDIF')
+        @self.pg.production('if_command : IF LPAR orexpression RPAR DOISP block ENDIF ELSE DOISP block ENDELSE')
         def ifelse_command(tokens):
             condition = tokens[2]
             blocktrue = tokens[5]

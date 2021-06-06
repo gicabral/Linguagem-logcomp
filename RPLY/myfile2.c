@@ -4,7 +4,7 @@ def logcomp(x){
         return x
     endif else :
         return logcomp(x-1) + logcomp(x-1)
-    endif
+    endelse
 }     
 
 a = 7
