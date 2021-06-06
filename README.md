@@ -35,7 +35,7 @@ def logcomp(x){
         return x
     endif else :
         return logcomp(x-1) + logcomp(x-1)
-    endif
+    endelse
 }     
 
 a = 7
@@ -71,7 +71,7 @@ DEF = "def", IDENTIFIER, "(", (" "| DEFARGS), ")", "{", BLOCK, "}";
 DEFARGS = IDENTIFIER, {",", IDENTIFIER};
 DEFCALL = IDENTIFIER, "(", {ARGUMENTS}, ")";
 ARGUMENTS = OREXPRESSION | {ARGUMENTS, ",", OREXPRESSION};
-COMMANDS = DEF |("if", "(", OREXPRESSION, ")", ":", BLOCK, {"else", ":", BLOCK}, "endif") | (IDENTIFIER, "=", OREXPRESSION)|("print", 
+COMMANDS = DEF |("if", "(", OREXPRESSION, ")", ":", BLOCK, "endif", {"else", ":", BLOCK, "endelse"}) | (IDENTIFIER, "=", OREXPRESSION)|("print", 
 "(", OREXPRESSION, ")") | ("while", "(", OREXPRESSION, ")", ":", BLOCK, "endwhile") | RETURN | OREXPRESSION;
 RETURN = "return", {OREXPRESSION};
 POWEXPRESSION = (NUMBER | IDENTIFIER | DEFCALL) | ("(", OREXPRESSION, ")");
